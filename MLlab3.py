@@ -1,33 +1,5 @@
-# =============================================================================
-# SVM for Classification and Anomaly Detection Lab
-#
-# This lab demonstrates two applications of Support Vector Machines:
-#
-# 1. Classification on the Iris dataset:
-#    - Load the Iris dataset and inspect its features.
-#    - Perform a train/test split.
-#    - Train a basic SVM classifier with a linear kernel on the full dataset.
-#
-#    Then, focusing on 2D binary classification:
-#    - Choose only the first two features (columns) of iris.data.
-#    - Since SVM in its basic form is a 2-class classifier, eliminate samples
-#      where iris.target == 2.
-#    - Plot scatterplots for classes 0 and 1 to check their separability.
-#    - Train and test the SVM classifier (experimenting with the regularization
-#      parameter C, e.g., C=200).
-#    - Visualize the decision boundary using the equation: [w0, w1]*[x0, x1] + b = 0.
-#    - Plot the support vectors on the 2D plot.
-#
-# 2. Anomaly Detection using One-Class SVM:
-#    - Generate synthetic data using make_blobs.
-#    - Train a One-Class SVM to detect anomalies.
-#    - Plot detected anomalies using both direct prediction and score thresholding.
-# =============================================================================
 
-# ---------------------------
 # PART 1: SVM Classification on Iris Data
-# ---------------------------
-
 # Import libraries for dataset handling, modeling, and visualization.
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
@@ -56,9 +28,7 @@ SVMmodel.fit(X_train, y_train)
 print("SVM parameters:", SVMmodel.get_params())
 print("Test set accuracy (multi-class):", SVMmodel.score(X_test, y_test))
 
-# -----------------------------------------------------------
-# Now, focus on 2D binary classification for visualization.
-# -----------------------------------------------------------
+# focus on 2D binary classification for visualization.
 
 # Step 1: Choose only the first two features (columns) of iris.data.
 X_two_features = iris.data[:, 0:2]
@@ -70,7 +40,7 @@ plt.scatter(X_two_features[iris.target == 0, 0], X_two_features[iris.target == 0
             color='blue', label='Class 0')
 plt.scatter(X_two_features[iris.target == 1, 0], X_two_features[iris.target == 1, 1],
             color='red', label='Class 1')
-# (Note: The extra scatter using cyan in your code seems redundant; we focus on classes 0 & 1.)
+# focus on classes 0 & 1
 plt.xlabel(iris.feature_names[0])
 plt.ylabel(iris.feature_names[1])
 plt.title("Scatter plot for Classes 0 and 1 (First Two Features)")
@@ -96,7 +66,6 @@ SVMmodel_bin.fit(X_train_bin, y_train_bin)
 accuracy_bin = SVMmodel_bin.score(X_test_bin, y_test_bin)
 print(f"Accuracy of the binary SVM classifier with C=200: {accuracy_bin:.2f}")
 
-# Step 5: Visualization of the binary classifier.
 # Plot the binary data points.
 plt.figure(figsize=(7, 5))
 plt.scatter(X_binary[y_binary == 0, 0], X_binary[y_binary == 0, 1],
@@ -133,9 +102,7 @@ plt.scatter(supvectors[:, 0], supvectors[:, 1], s=100,
 plt.legend()
 plt.show()
 
-# ---------------------------
 # PART 2: Anomaly Detection via One-Class SVM
-# ---------------------------
 
 from sklearn.svm import OneClassSVM
 from sklearn.datasets import make_blobs
